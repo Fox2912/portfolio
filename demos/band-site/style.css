@@ -1,25 +1,105 @@
 body {
-  margin: 0;
   background-image: url("haikei.jpg");
   background-size: cover;
   color: #f0f0f0;
   text-align: center;
+  margin: 0;
 }
 
-.title {
+a img {
+  border: none;
+  vertical-align: middle;
+}
+
+a,
+a:link,
+a:visited,
+a:hover,
+a:active {
+  color: #b0f5f5;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #ffffff;
+}
+
+.Title {
+  color: #f0f0f0;
+  font-size: 70px;
+}
+
+.icon {
+  width: 9%;
+}
+
+.Title_Text {
+  margin-top: 8%;
+  margin-bottom: 0;
+  margin-left: 13%;
+  color: #ffffff;
   font-size: 40px;
+  text-align: left;
 }
 
-.text_B {
-  font-size: 27px;
+#NEWS {
+  margin-left: 17%;
+  font-size: 20px;
+  text-align: left;
 }
 
-.text {
+#MV {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-top: 20px;
+  margin-left: 14%;
+}
+
+.yt-frame {
+  width: 40%;
+  max-width: 100%;
+  aspect-ratio: 16 / 9;
+  border: none;
+}
+
+.demo-frame {
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 8px;
+  background: rgba(0, 0, 0, 0.62);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+}
+
+.demo-frame small {
+  color: #d7e1e1;
+}
+
+#RELEASE {
+  margin-top: 0;
+  margin-left: 14%;
   font-size: 25px;
+  text-align: left;
+}
+
+.Release_Block {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(260px, 360px));
+  justify-content: center;
+  gap: 48px;
+  width: min(820px, 90%);
+  margin-right: auto;
+  margin-left: auto;
+  margin-top: 16px;
+}
+
+.release-item {
+  text-align: center;
 }
 
 .CD_photo {
-  width: 35%;
+  width: 100%;
   margin-top: 0;
 }
 
@@ -27,28 +107,21 @@ body {
   display: grid;
   place-items: center;
   align-content: center;
-  gap: 8px;
   aspect-ratio: 1 / 1;
-  margin: 0 auto;
   background: rgba(0, 0, 0, 0.62);
   border: 1px solid rgba(255, 255, 255, 0.22);
   color: #f0f0f0;
   font-weight: 700;
 }
 
-.demo-cover small {
-  max-width: 80%;
-  color: #d7e1e1;
-  font-size: 14px;
+.demo-cover-alt {
+  background: rgba(13, 30, 43, 0.72);
 }
 
-a.Top,
-a.Top:link,
-a.Top:visited,
-a.Top:hover,
-a.Top:active {
-  color: hsl(248, 57%, 44%);
-  text-decoration: none;
+.CD_name {
+  display: block;
+  margin-top: 8px;
+  font-size: 20px;
 }
 
 .footer {
@@ -57,21 +130,95 @@ a.Top:active {
   background: #ffffff;
   color: black;
   font-size: 20px;
+  text-align: left;
 }
 
 #footer {
   margin-top: 5%;
 }
 
+a.QandA,
+a.QandA:link,
+a.QandA:visited,
+a.QandA:hover,
+a.QandA:active,
+a.PortfolioLink,
+a.PortfolioLink:link,
+a.PortfolioLink:visited,
+a.PortfolioLink:hover,
+a.PortfolioLink:active {
+  color: hsl(248, 57%, 44%);
+  text-decoration: none;
+}
+
+a.QandA:hover,
+a.PortfolioLink:hover {
+  color: #000000;
+}
+
 @media (max-width: 600px) {
-  .CD_photo {
-    width: 80%;
+  .Title {
+    font-size: 30px;
+  }
+
+  .Title_Text {
+    margin-left: 3%;
+    color: #ffffff;
+    font-size: 25px;
+  }
+
+  .icon {
+    width: 18%;
+  }
+
+  #NEWS {
+    margin-left: 4%;
+    color: #ffffff;
+    font-size: 12px;
+  }
+
+  .yt-frame {
+    display: block;
+    width: 90%;
+    max-width: 600px;
+    margin: 0 auto;
+    aspect-ratio: 16 / 9;
+    border: none;
+  }
+
+  #MV {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0;
+  }
+
+  #RELEASE {
+    margin-left: 0;
+    font-size: 16px;
+    text-align: center;
+  }
+
+  .Release_Block {
+    grid-template-columns: 1fr;
+    gap: 26px;
+    width: min(82%, 360px);
     margin-right: auto;
     margin-left: auto;
   }
 
-  .text {
-    font-size: 18px;
+  .release-item {
+    min-width: 0;
+  }
+
+  .CD_name {
+    font-size: 15px;
+  }
+
+  .demo-cover {
+    min-height: 0;
   }
 
   .footer {
