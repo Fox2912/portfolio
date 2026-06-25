@@ -248,6 +248,18 @@ h3 {
   color: var(--muted);
 }
 
+.work-credit {
+  margin-top: -4px;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.work-credit a,
+.credit-note a,
+.work-summary a {
+  color: var(--primary);
+}
+
 .tag-list,
 .tech-list {
   display: flex;
@@ -362,6 +374,16 @@ h3 {
 
 .work-hero-detail {
   padding: 32px;
+}
+
+.credit-note {
+  margin: 0 0 20px;
+  padding: 14px 16px;
+  background: #eef8f5;
+  border: 1px solid #bee7dc;
+  border-radius: var(--radius);
+  color: #235e52;
+  font-weight: 700;
 }
 
 .work-summary {
