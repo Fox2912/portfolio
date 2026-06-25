@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>在校届補助ツール | 制作実績</title>
+  <link rel="stylesheet" href="../../assets/css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="site-logo" href="../../index.html">Portfolio</a>
+    <nav class="site-nav" aria-label="主要ナビゲーション">
+      <a href="../../index.html#works">制作実績</a>
+      <a href="../../index.html#skills">対応範囲</a>
+      <a href="../../index.html#contact">連絡先</a>
+    </nav>
+  </header>
+  <main class="section work-detail">
+    <p class="breadcrumb"><a href="../../index.html">トップ</a> / 在校届補助ツール</p>
+    <div class="detail-layout">
+      <section class="work-hero-detail">
+        <p class="section-label">Small Web App</p>
+        <h1>在校届補助ツール</h1>
+        <p class="lead">在校届作成を補助するために制作したWebアプリです。FlaskとSQLiteを用いて、入力内容の管理とPDF生成機能を実装しました。</p>
+        <div class="hero-actions">
+          <a class="button primary" href="../../demos/zaikou-tool/">匿名デモを見る</a>
+          <a class="button ghost" href="../../index.html#works">一覧へ戻る</a>
+        </div>
+      </section>
+
+      <aside class="work-summary">
+        <dl>
+          <div><dt>制作形式</dt><dd>課題解決に向けて自主制作</dd></div>
+          <div><dt>実装体制</dt><dd>要件整理、画面、DB、PDF生成まで一人で実装</dd></div>
+          <div><dt>使用技術</dt><dd>Python / Flask / SQLite / HTML / CSS / JavaScript</dd></div>
+        </dl>
+      </aside>
+
+      <section class="detail-section">
+        <h2>概要</h2>
+        <p>学生の在校登録、教室変更、提出担当者設定、PDF出力を補助する小規模Webアプリです。Raspberry Pi上でのLAN内運用を想定し、日常的に使いやすい入力画面を目指して制作しました。</p>
+      </section>
+      <section class="detail-section">
+        <h2>実装したこと</h2>
+        <ul class="plain-list">
+          <li>Flaskによるメイン画面と管理画面の実装</li>
+          <li>SQLiteを使った学生情報、教室情報、登録状態の管理</li>
+          <li>カード型UIによる登録・解除操作</li>
+          <li>登録内容をもとにしたPDF生成処理</li>
+          <li>公開用に実データを含まない静的匿名デモを作成</li>
+        </ul>
+      </section>
+      <section class="detail-section">
+        <h2>工夫した点</h2>
+        <p>現場で素早く登録できるカード型UI、管理画面での名簿編集、PDF出力位置の設定分離など、運用後の修正しやすさを意識しました。公開デモでは、実データや内部情報を含めずに操作感だけを確認できるようにしています。</p>
+      </section>
+    </div>
+  </main>
+</body>
+</html>

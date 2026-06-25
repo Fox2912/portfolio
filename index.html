@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Web制作ポートフォリオ</title>
+  <meta name="description" content="HTML/CSS修正、LP制作、小規模Web制作に対応するためのポートフォリオです。">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="site-logo" href="index.html">Portfolio</a>
+    <nav class="site-nav" aria-label="主要ナビゲーション">
+      <a href="#works">制作実績</a>
+      <a href="#skills">対応範囲</a>
+      <a href="#contact">連絡先</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero section">
+      <div class="hero-text">
+        <p class="eyebrow">HTML / CSS / JavaScript / Flask</p>
+        <h1 class="hero-title">
+          <span>HTML/CSS修正・LP制作</span>
+          <span>小規模Web制作に対応できます。</span>
+        </h1>
+        <p class="lead">既存ページの修正、レスポンシブ対応、フォーム画面、静的サイト、簡単なWebアプリの画面作成まで、目的に合わせて見やすく保守しやすい形で制作します。</p>
+        <div class="hero-actions">
+          <a class="button primary" href="#works">制作実績を見る</a>
+          <a class="button ghost" href="#contact">相談する</a>
+        </div>
+      </div>
+      <div class="hero-panel" aria-label="対応できる作業">
+        <span>HTML/CSS修正</span>
+        <span>レスポンシブ対応</span>
+        <span>LP作成</span>
+        <span>JavaScript実装</span>
+        <span>フォーム画面作成</span>
+        <span>小規模Webアプリ画面</span>
+      </div>
+    </section>
+
+    <section class="section intro">
+      <div>
+        <p class="section-label">About</p>
+        <h2 class="intro-title">見やすく、修正しやすい実装。</h2>
+      </div>
+      <p>デザインの派手さよりも、情報整理、スマホ表示、修正しやすいHTML/CSS構成を重視しています。既存サイトの軽微な修正から、1ページ完結のLP、小規模なWebコンテンツ制作まで対応可能です。</p>
+    </section>
+
+    <section class="section" id="works">
+      <div class="section-heading">
+        <p class="section-label">Works</p>
+        <h2>制作実績</h2>
+      </div>
+      <div class="work-grid">
+        <article class="work-card">
+          <div class="work-visual band-preview" aria-hidden="true"></div>
+          <div class="work-body">
+            <p class="work-type">Static Website</p>
+            <h3>バンドWebサイト</h3>
+            <p>HTML/CSSで制作した活動紹介サイトです。画像配置、ナビゲーション、レスポンシブ対応を整理しました。</p>
+            <div class="tag-list">
+              <span>HTML</span><span>CSS</span><span>Responsive</span>
+            </div>
+            <div class="card-actions">
+              <a href="works/band-site/">制作内容を見る</a>
+              <a href="demos/band-site/">デモを見る</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="work-card">
+          <div class="work-visual sdgs-preview" aria-hidden="true"></div>
+          <div class="work-body">
+            <p class="work-type">Interactive Content</p>
+            <h3>SDGs診断Webコンテンツ</h3>
+            <p>回答内容に応じて結果を切り替える診断型コンテンツです。フォーム操作と条件分岐を実装しました。</p>
+            <div class="tag-list">
+              <span>HTML</span><span>CSS</span><span>JavaScript</span>
+            </div>
+            <div class="card-actions">
+              <a href="works/sdgs-check/">制作内容を見る</a>
+              <a href="demos/sdgs-check/">デモを見る</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="work-card">
+          <div class="work-visual zaikou-preview" aria-hidden="true"></div>
+          <div class="work-body">
+            <p class="work-type">Small Web App</p>
+            <h3>在校届補助ツール</h3>
+            <p>Flask / SQLite / PDF生成を用いた実用ツールです。公開用には個人情報を含まない紹介ページに整理しています。</p>
+            <div class="tag-list">
+              <span>Python</span><span>Flask</span><span>SQLite</span>
+            </div>
+            <div class="card-actions">
+              <a href="works/zaikou-tool/">制作内容を見る</a>
+              <a href="demos/zaikou-tool/">デモを見る</a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section split" id="skills">
+      <div>
+        <p class="section-label">Service</p>
+        <h2>対応できる作業例</h2>
+      </div>
+      <ul class="check-list">
+        <li>HTML/CSS修正、既存ページの崩れ調整</li>
+        <li>スマホ・タブレット向けのレスポンシブ対応</li>
+        <li>LP作成、セクション追加、CTA改善</li>
+        <li>JavaScriptによる簡単な動きや診断ロジックの実装</li>
+        <li>フォーム画面、入力画面、管理画面のHTML/CSS作成</li>
+        <li>小規模Webアプリの画面作成・導線整理</li>
+      </ul>
+    </section>
+
+    <section class="section tech-section">
+      <p class="section-label">Tech Stack</p>
+      <div class="tech-list">
+        <span>HTML</span>
+        <span>CSS</span>
+        <span>JavaScript</span>
+        <span>Python</span>
+        <span>Flask</span>
+        <span>SQLite</span>
+        <span>GitHub Pages</span>
+      </div>
+      <p class="ai-note">制作において要件整理やコード修正の補助として生成AIを活用しました。最終的な構成確認、実装内容の調整、公開前チェックは自身で行っています。</p>
+    </section>
+
+    <section class="section contact" id="contact">
+      <div>
+        <p class="section-label">Contact</p>
+        <h2>ご相談・ご依頼</h2>
+      </div>
+      <p>ご相談やご依頼はこちらまでご連絡ください。</p>
+      <a class="contact-mail" href="mailto:cgemu4293@gmail.com">cgemu4293@gmail.com</a>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; 2026 Web Portfolio</p>
+  </footer>
+
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

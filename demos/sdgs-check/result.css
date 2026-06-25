@@ -1,0 +1,313 @@
+*{ box-sizing:border-box; }
+body{
+  margin:0;
+  position: relative;      /* 疑似要素の基準 */
+
+  font-family: "Noto Sans JP", system-ui, -apple-system, sans-serif;
+  color:var(--text);
+}
+
+body::before {
+  	content: "";             /* 疑似要素を有効化 */
+  	position: absolute;      /* body基準で配置 */
+
+    top: 0;
+  	left: 0;
+  	width: 100%;
+  	height: 100%;
+
+  	background-image: url("picture/haikei.png"); /* 背景画像 */
+  	background-size: 250%;
+
+	opacity: 0.3;   /* 透明度 */
+  	z-index: -1;             /* 中身の背面へ */
+}
+
+:root{
+  --bg1:#EAF7F3;        /* 薄いティール寄り */
+  --bg2:#FFF7E8;        /* 薄いアイボリー */
+  --primary:#16A394;    /* ティール */
+  --accent:#F7C948;     /* 星っぽい黄色 */
+  --text:#123;
+}
+
+
+
+.screen{
+  min-height:100svh;
+  display:grid;
+  place-items:center;
+  padding:24px;
+  background: radial-gradient(1200px 800px at 30% 20%, var(--bg2), transparent 60%),
+              radial-gradient(1200px 800px at 70% 80%, var(--bg1), transparent 60%),
+              linear-gradient(135deg, #ffffff, #f7fbff);
+  position:relative;
+  overflow:hidden;
+}
+
+/* 背景パターン：薄く・少しだけぼかす */
+.bg{
+  pointer-events: none;
+  position:absolute; inset:-40px;
+  background:url("picture/haikei.png") center/520px repeat;
+  opacity:.12;
+  filter: blur(1.5px);
+  transform: rotate(-6deg) scale(1.1);
+}
+
+/* 中央カード：フロスト（ガラスっぽい） */
+.card{
+  width:min(420px, 92vw);
+  padding:28px 22px 22px;
+  border-radius:24px;
+  background: rgba(255, 255, 255, 0);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255,255,255,.65);
+  box-shadow: 0 18px 50px rgba(0,0,0,.12);
+  text-align:center;
+  position:relative;
+}
+
+.result-character{
+  display:block;
+  width: 60%;
+  height:auto;
+  object-fit: contain;
+
+  /* 追加：PCで中央寄せ */
+  margin: 0 auto;
+}
+
+
+
+
+.result-text{
+  text-align: left;
+  width: 100%;
+  margin: 14px 0 18px;
+  border-radius: 12px;
+
+  white-space: pre-wrap;
+  background-color: rgba(125, 176, 125, 0.7);
+
+  /* 追加：余白と読みやすさ */
+  padding: 14px 14px;
+  line-height: 1.75;
+  font-size: 14px;
+  font-weight: 550;
+
+  /* 念のため：ブロックを左に寄せ切る */
+  margin-left: 0;
+  margin-right: auto;
+}
+
+
+/* 強調テキスト */
+.st{
+  color: white;
+
+  -webkit-text-stroke: 0.06px black;
+}
+
+/* 見出し＋リード文 */
+.lead{
+  margin:0 0 18px;
+  font-size:14px;
+  opacity:.78;
+}
+
+/* CTAボタン：丸角＋影は控えめ、押せる感だけ残す */
+.cta{
+  width:100%;
+  border:0;
+  border-radius:18px;
+  padding:16px 18px;
+  font-size:16px;
+  font-weight:800;
+  letter-spacing:.02em;
+  color:white;
+  background: linear-gradient(135deg, var(--primary), #0E7F74);
+  box-shadow: 0 14px 30px rgba(22,163,148,.28);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  cursor:pointer;
+  transition: transform .12s ease, box-shadow .12s ease, filter .12s ease;
+}
+
+.cta:hover{
+  transform: translateY(-1px);
+  filter: brightness(1.02);
+}
+
+.cta:active{
+  transform: translateY(1px);
+  box-shadow: 0 10px 20px rgba(22,163,148,.22);
+}
+
+.restart-link{
+  text-decoration: none;
+  color: inherit;
+}
+
+.arrow{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+
+  background: rgba(255, 229, 84, 0.9);
+  padding:2px 10px;
+  border-radius:999px;
+
+  color:#fff;        /* 矢印の色を明示 */
+  line-height: 1;
+}
+
+/* CSSで矢印を描く */
+.arrow::before{
+  content:"";
+  display:block;
+  width: 10px;
+  height: 10px;
+  box-sizing: border-box;
+  border: 2px solid #fff;
+  border-left: 0;
+  border-bottom: 0;
+  transform: rotate(45deg);
+}
+
+h1{
+  color: rgb(0, 0, 0);
+  font-size: 20px;
+}
+
+.note{
+  margin:14px 0 0;
+  font-size:12px;
+  opacity:.7;
+}
+
+.start-link{
+  text-decoration: none;
+  color: inherit;
+}
+
+.result{
+  position: fixed;
+  top: 10%;
+  right: 10%;
+  font-weight: bold;
+}
+
+#kekka{
+  color: red;
+}
+
+/*　－－－－－－－－－－－－－－－－－－－－　*/
+/*　ーーーーメディアクエリ（スマホ）ーーーー　*/ 
+/*　－－－－－－－－－－－－－－－－－－－－　*/
+
+@media (max-width: 780px) {
+
+  .bg{
+    background: url("picture/haikei.png") center/450px repeat;
+  }
+
+  .screen{
+    padding: 10px;
+    place-items: start center;
+  }
+
+  .card{
+    width: 100%;
+    max-width: none;
+    min-height: calc(100svh - 20px);
+    padding: 18px 14px 22px;
+    border-radius: 20px;
+    overflow: auto;
+  }
+
+  .logo{
+    width: 75%;
+    height: auto;
+    display: block;
+    margin: 4px auto 10px;
+    filter: drop-shadow(0 10px 18px rgba(0,0,0,.14));
+  }
+
+  .lead{
+    margin: 0 0 18px;
+    font-size: 14px;
+    opacity: .78;
+  }
+
+  .cta{
+    border-radius: 18px;
+    padding: 13px 18px;
+    font-size: 14px;
+  }
+
+  /* キャラ枠：中で中央寄せ */
+  .character-wrap{
+    position: relative;
+    width: 100%;
+    margin: 10px 0 12px;
+    padding: 38px 12px 14px;
+    border-radius: 18px;
+    border: 1px solid rgba(255,255,255,.7);
+    background:
+      radial-gradient(280px 160px at 50% 18%, rgba(255,255,255,.95), rgba(255,255,255,.55) 60%, rgba(255,255,255,.2)),
+      linear-gradient(135deg, rgba(255,247,232,.55), rgba(234,247,243,.45));
+    box-shadow: 0 14px 30px rgba(0,0,0,.10);
+    overflow: hidden;
+
+    display: grid;
+    place-items: center;
+    min-height: 320px;
+  }
+
+  .character-wrap::before{
+    content:"";
+    position:absolute;
+    right:-60px;
+    top:-40px;
+    width: 220px;
+    height: 220px;
+    border-radius: 999px;
+    background: rgba(247, 201, 72, 0.18);
+    transform: rotate(18deg);
+  }
+
+  .character-badge{
+    position:absolute;
+    left: 12px;
+    top: 10px;
+    font-size: 12px;
+    font-weight: 800;
+    padding: 6px 10px;
+    border-radius: 999px;
+    color: rgba(18,35,51,.9);
+    background: rgba(255,255,255,.75);
+    border: 1px solid rgba(255,255,255,.85);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+
+  .result-character{
+    display: block;
+    width: min(90%, 280px);
+    max-height: 300px;
+    height: auto;
+    object-fit: contain;
+    object-position: center bottom;
+    margin: 0 auto;
+    filter: drop-shadow(0 18px 22px rgba(0,0,0,.18));
+  }
+
+  .result-text{
+    padding: 14px 14px;
+    font-size: 14px;
+  }
+}

@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>在校届補助ツール 匿名デモ</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="app-header">
+    <div>
+      <p class="app-label">匿名デモ版</p>
+      <h1>在校届補助ツール</h1>
+      <p>18:00以降に残る人をカード操作で登録し、提出用の一覧を確認するデモです。</p>
+    </div>
+    <a class="back-link" href="../../index.html">Portfolioへ戻る</a>
+  </header>
+
+  <main class="page">
+    <section class="control-panel">
+      <label>
+        在校日
+        <input id="stayDate" type="date">
+      </label>
+      <label>
+        提出担当
+        <select id="submitter">
+          <option>サンプル学生01</option>
+          <option>サンプル学生02</option>
+          <option>サンプル学生03</option>
+        </select>
+      </label>
+      <label>
+        提出予定
+        <input id="submitTime" type="time" value="17:00">
+      </label>
+      <button class="print-button" id="showPreview" type="button">PDF出力プレビュー</button>
+    </section>
+
+    <section class="summary">
+      <div>
+        <p>現在の登録人数</p>
+        <strong><span id="selectedCount">0</span>人</strong>
+      </div>
+      <button class="clear-button" id="clearAll" type="button">全員解除</button>
+    </section>
+
+    <section class="student-grid" aria-label="学生一覧">
+      <article class="student-card" data-name="サンプル学生01" data-number="DUMMY-001">
+        <button type="button" class="student-toggle">
+          <span class="roster">01</span>
+          <span><b>DUMMY-001</b>サンプル学生01</span>
+          <span class="badge">未登録</span>
+        </button>
+        <label>使用場所
+          <select>
+            <option>会議室A</option>
+            <option>実習室B</option>
+            <option>作業室C</option>
+          </select>
+        </label>
+      </article>
+      <article class="student-card" data-name="サンプル学生02" data-number="DUMMY-002">
+        <button type="button" class="student-toggle">
+          <span class="roster">02</span>
+          <span><b>DUMMY-002</b>サンプル学生02</span>
+          <span class="badge">未登録</span>
+        </button>
+        <label>使用場所
+          <select>
+            <option>実習室B</option>
+            <option>会議室A</option>
+            <option>作業室C</option>
+          </select>
+        </label>
+      </article>
+      <article class="student-card" data-name="サンプル学生03" data-number="DUMMY-003">
+        <button type="button" class="student-toggle">
+          <span class="roster">03</span>
+          <span><b>DUMMY-003</b>サンプル学生03</span>
+          <span class="badge">未登録</span>
+        </button>
+        <label>使用場所
+          <select>
+            <option>作業室C</option>
+            <option>会議室A</option>
+            <option>実習室B</option>
+          </select>
+        </label>
+      </article>
+      <article class="student-card" data-name="サンプル学生04" data-number="DUMMY-004">
+        <button type="button" class="student-toggle">
+          <span class="roster">04</span>
+          <span><b>DUMMY-004</b>サンプル学生04</span>
+          <span class="badge">未登録</span>
+        </button>
+        <label>使用場所
+          <select>
+            <option>会議室A</option>
+            <option>実習室B</option>
+            <option>作業室C</option>
+          </select>
+        </label>
+      </article>
+    </section>
+
+    <section class="preview" id="preview" hidden>
+      <div class="preview-header">
+        <div>
+          <p class="app-label">PDF生成イメージ</p>
+          <h2>提出一覧プレビュー</h2>
+        </div>
+        <button id="closePreview" type="button">閉じる</button>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>番号</th>
+            <th>氏名</th>
+            <th>使用場所</th>
+            <th>退室予定</th>
+          </tr>
+        </thead>
+        <tbody id="previewBody"></tbody>
+      </table>
+      <p class="note">これは匿名デモです。実際のPDFテンプレート、学校名、実データは含めていません。</p>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!doctype html>
+<html>
+<head>
+  <title>キャラクター拡大</title>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <link rel="icon" href="picture/Logo.png" sizes="32x32" type="image/png" />
+  <link rel="stylesheet" href="character_view.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+  <div class="screen">
+    <div class="bg"></div>
+
+    <main class="card">
+      <div class="topbar">
+        <button id="back" type="button">戻る</button>
+      </div>
+
+      <div class="viewer">
+        <img id="zoom-img" src="" alt="診断キャラクター（拡大）">
+        <div class="meta">
+          <div class="caption" id="caption"></div>
+        </div>
+      </div>
+
+
+    </main>
+  </div>
+
+  <script>
+    (function(){
+      // gid は URL ?gid=8 を優先。無ければ localStorage を参照
+      const params = new URLSearchParams(location.search);
+      const gidRaw = params.get('gid') || localStorage.getItem('sindan_goalId') || '';
+      const gid = Number(gidRaw);
+
+      const img = document.getElementById('zoom-img');
+      const cap = document.getElementById('caption');
+
+      if(!Number.isInteger(gid) || gid < 1 || gid > 17){
+        cap.textContent = 'キャラクターIDが不正です（1〜17のはず）';
+        img.style.display = 'none';
+      }else{
+        const goalName = {
+          1: '貧困をなくそう',
+          2: '飢餓をゼロに',
+          3: 'すべての人に健康と福祉を',
+          4: '質の高い教育をみんなに',
+          5: 'ジェンダー平等を実現しよう',
+          6: '安全な水とトイレを世界中に',
+          7: 'エネルギーをみんなに。そしてクリーンに',
+          8: '働きがいも経済成長も',
+          9: '産業と技術革新の基盤を作ろう',
+          10:'人や国の不平等をなくそう',
+          11:'住み続けられるまちづくりを',
+          12:'つくる責任、つかう責任',
+          13:'気候変動に具体的な対策を',
+          14:'海の豊かさを守ろう',
+          15:'陸の豊かさも守ろう',
+          16:'平和と公正をすべての人に',
+          17:'パートナーシップで目標を達成しよう'
+        }[gid];
+
+        img.src = `character/${gid}番.png`;
+        img.alt = `${gid}番 ${goalName}（拡大）`;
+        cap.textContent = `${gid}番 ${goalName}`;
+        document.title = `${gid}番 ${goalName} - キャラクター拡大`;
+      }
+
+      document.getElementById('back').addEventListener('click', function(){
+        // 履歴が無い場合のフォールバック
+        if(history.length > 1) history.back();
+        else location.href = 'result.html';
+      });
+    })();
+  </script>
+</body>
+</html>

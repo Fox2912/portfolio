@@ -1,0 +1,154 @@
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  margin: 0;
+  background-image: url("haikei.jpg");
+  background-size: cover;
+  color: #f0f0f0;
+  text-align: center;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.Title {
+  font-size: 44px;
+}
+
+.Title_Text {
+  font-size: 30px;
+}
+
+.member-note {
+  width: min(720px, calc(100% - 32px));
+  margin: 0 auto 28px;
+  color: #f0f0f0;
+  font-size: 18px;
+}
+
+.member-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  width: min(980px, calc(100% - 32px));
+  margin: 0 auto 48px;
+}
+
+.member-card,
+.live-panel {
+  background: rgba(0, 0, 0, 0.58);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  color: #f0f0f0;
+}
+
+.member-card {
+  padding: 22px;
+  text-align: left;
+}
+
+.part,
+.live-date {
+  color: #b0f5f5;
+  font-weight: 700;
+}
+
+.member-card h2 {
+  margin: 8px 0 12px;
+  font-size: 28px;
+}
+
+.member-card p,
+.live-panel p {
+  margin-bottom: 0;
+  line-height: 1.7;
+}
+
+.live-panel {
+  width: min(760px, calc(100% - 32px));
+  margin: 0 auto 48px;
+  padding: 28px;
+  text-align: left;
+  overflow-wrap: anywhere;
+}
+
+.live-panel h2 {
+  margin: 8px 0 14px;
+  font-size: 34px;
+}
+
+.live-panel dl {
+  display: grid;
+  gap: 14px;
+  margin: 24px 0 0;
+}
+
+.live-panel div {
+  display: grid;
+  grid-template-columns: 150px 1fr;
+  gap: 14px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.22);
+}
+
+.live-panel dt {
+  color: #b0f5f5;
+  font-weight: 700;
+}
+
+.live-panel dd {
+  margin: 0;
+}
+
+a.Top,
+a.Top:link,
+a.Top:visited,
+a.Top:hover,
+a.Top:active {
+  color: hsl(248, 57%, 44%);
+  text-decoration: none;
+}
+
+.footer {
+  margin: 0;
+  padding: 2rem;
+  background: #ffffff;
+  color: black;
+  font-size: 20px;
+}
+
+#footer {
+  margin-top: auto;
+}
+
+@media (max-width: 600px) {
+  .Title {
+    font-size: 30px;
+  }
+
+  .Title_Text {
+    font-size: 22px;
+  }
+
+  .member-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .member-card,
+  .live-panel {
+    padding: 18px;
+  }
+
+  .live-panel div {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+
+  .footer {
+    padding: 0.8rem 1rem;
+    font-size: 15px;
+    line-height: 1.2;
+    text-align: center;
+  }
+}

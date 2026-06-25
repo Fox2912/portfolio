@@ -1,0 +1,86 @@
+body {
+  margin: 0;
+  background-image: url("haikei.jpg");
+  background-size: cover;
+  color: #f0f0f0;
+  text-align: center;
+}
+
+.title {
+  font-size: 40px;
+}
+
+.text_B {
+  font-size: 27px;
+}
+
+.text {
+  font-size: 25px;
+}
+
+.CD_photo {
+  width: 35%;
+  margin-top: 0;
+}
+
+.demo-cover {
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 8px;
+  aspect-ratio: 1 / 1;
+  margin: 0 auto;
+  background: rgba(0, 0, 0, 0.62);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  color: #f0f0f0;
+  font-weight: 700;
+}
+
+.demo-cover small {
+  max-width: 80%;
+  color: #d7e1e1;
+  font-size: 14px;
+}
+
+a.Top,
+a.Top:link,
+a.Top:visited,
+a.Top:hover,
+a.Top:active {
+  color: hsl(248, 57%, 44%);
+  text-decoration: none;
+}
+
+.footer {
+  margin: 0;
+  padding: 2rem;
+  background: #ffffff;
+  color: black;
+  font-size: 20px;
+}
+
+#footer {
+  margin-top: 5%;
+}
+
+@media (max-width: 600px) {
+  .CD_photo {
+    width: 80%;
+    margin-right: 0;
+  }
+
+  .text {
+    font-size: 18px;
+  }
+
+  .footer {
+    padding: 0.8rem 1rem;
+    font-size: 15px;
+    line-height: 1.2;
+    text-align: center;
+  }
+
+  #footer {
+    margin-top: 15%;
+  }
+}

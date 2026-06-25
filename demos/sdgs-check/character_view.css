@@ -1,0 +1,246 @@
+*{ box-sizing:border-box; }
+:root{
+  --bg1:#EAF7F3;
+  --bg2:#FFF7E8;
+  --primary:#16A394;
+  --accent:#F7C948;
+  --text:#123;
+}
+
+body{
+  position: relative;
+  text-align: center;
+  margin: 0;
+  font-family: "Noto Sans JP", system-ui, -apple-system, sans-serif;
+  color: var(--text);
+}
+
+body::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("picture/haikei.png");
+  background-size: 250%;
+  opacity: 0.3;
+  z-index: -1;
+}
+
+.screen{
+  min-height: 100svh;
+  padding: 24px;
+  background: radial-gradient(1200px 800px at 30% 20%, var(--bg2), transparent 60%),
+              radial-gradient(1200px 800px at 70% 80%, var(--bg1), transparent 60%),
+              linear-gradient(135deg, #ffffff, #f7fbff);
+  position: relative;
+  overflow: hidden;
+}
+
+.bg{
+  pointer-events: none;
+  position: absolute;
+  inset: -40px;
+  background: url("picture/haikei.png") center/520px repeat;
+  opacity: .12;
+  filter: blur(1.5px);
+  transform: rotate(-6deg) scale(1.1);
+}
+
+/* ===== 装飾フレーム（画像みたいな淵） ===== */
+.card{
+  position: relative;
+  width: min(760px, 92vw);
+  margin: 0 auto;
+
+  border-radius: 24px;
+  overflow: hidden;
+
+  /* 枠を“本当の枠”にする：ここが重要 */
+  padding: 70px 54px 54px; /* 上/左右/下：好みで調整 */
+
+  background-color: rgba(255, 246, 246, 0.5);
+
+}
+
+/* フレーム本体 */
+.card::before{
+  content:"";
+  position:absolute;
+  inset: 0;                /* フレームをcardぴったり */
+  border-radius: inherit;  /* cardの角丸に追従 */
+  pointer-events:none;
+  z-index: 0;
+
+  /* SVGをそのまま貼る（上・下ライン、四隅キラ、左右ダイヤ列） */
+  background: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201000%201400'%3E%3Cdefs%3E%3Cpattern%20id='dia'%20width='44'%20height='44'%20patternUnits='userSpaceOnUse'%3E%3Cpolygon%20points='22,6%2038,22%2022,38%206,22'%20fill='%23000'/%3E%3C/pattern%3E%3Cg%20id='sp'%3E%3Cpath%20d='M50%200%20C58%2025%2075%2042%20100%2050%20C75%2058%2058%2075%2050%20100%20C42%2075%2025%2058%200%2050%20C25%2042%2042%2025%2050%200Z'%20fill='%23000'/%3E%3C/g%3E%3C/defs%3E%3Cline%20x1='160'%20y1='110'%20x2='840'%20y2='110'%20stroke='%23000'%20stroke-width='2'/%3E%3Cline%20x1='160'%20y1='1290'%20x2='840'%20y2='1290'%20stroke='%23000'%20stroke-width='2'/%3E%3Cg%20stroke='%23000'%20fill='none'%20stroke-width='2'%20transform='translate(500%20110)'%3E%3Cpolygon%20points='0,-22%2022,0%200,22%20-22,0'/%3E%3Cpolygon%20points='0,-12%2012,0%200,12%20-12,0'/%3E%3C/g%3E%3Cg%20stroke='%23000'%20fill='none'%20stroke-width='2'%20transform='translate(500%201290)'%3E%3Cpolygon%20points='0,-22%2022,0%200,22%20-22,0'/%3E%3Cpolygon%20points='0,-12%2012,0%200,12%20-12,0'/%3E%3C/g%3E%3Crect%20x='95'%20y='300'%20width='44'%20height='800'%20fill='url(%23dia)'/%3E%3Crect%20x='861'%20y='300'%20width='44'%20height='800'%20fill='url(%23dia)'/%3E%3Cg%20transform='translate(150%20190)%20scale(1.25)%20translate(-50%20-50)'%3E%3Cuse%20href='%23sp'/%3E%3C/g%3E%3Cg%20transform='translate(110%20130)%20scale(0.55)%20translate(-50%20-50)'%3E%3Cuse%20href='%23sp'/%3E%3C/g%3E%3Cg%20transform='translate(190%20245)%20scale(0.45)%20translate(-50%20-50)'%3E%3Cuse%20href='%23sp'/%3E%3C/g%3E%3Cg%20transform='translate(850%20190)%20scale(1.25)%20translate(-50%20-50)'%3E%3Cuse%20href='%23sp'/%3E%3C/g%3E%3Cg%20transform='translate(890%20130)%20scale(0.55)%20translate(-50%20-50)'%3E%3Cuse%20href='%23sp'/%3E%3C/g%3E%3Cg%20transform='translate(810%20245)%20scale(0.45)%20translate(-50%20-50)'%3E%3Cuse%20href='%23sp'/%3E%3C/g%3E%3Cg%20transform='translate(150%201210)%20scale(1.25)%20translate(-50%20-50)'%3E%3Cuse%20href='%23sp'/%3E%3C/g%3E%3Cg%20transform='translate(110%201270)%20scale(0.55)%20translate(-50%20-50)'%3E%3Cuse%20href='%23sp'/%3E%3C/g%3E%3Cg%20transform='translate(190%201155)%20scale(0.45)%20translate(-50%20-50)'%3E%3Cuse%20href='%23sp'/%3E%3C/g%3E%3Cg%20transform='translate(850%201210)%20scale(1.25)%20translate(-50%20-50)'%3E%3Cuse%20href='%23sp'/%3E%3C/g%3E%3Cg%20transform='translate(890%201270)%20scale(0.55)%20translate(-50%20-50)'%3E%3Cuse%20href='%23sp'/%3E%3C/g%3E%3Cg%20transform='translate(810%201155)%20scale(0.45)%20translate(-50%20-50)'%3E%3Cuse%20href='%23sp'/%3E%3C/g%3E%3C/svg%3E") no-repeat center / 100% 100%;
+
+  opacity: .9; /* 濃さ調整 */
+}
+
+/* card内の要素をフレームより上に */
+.card > *{
+  position: relative;
+  z-index: 1;
+}
+
+
+.topbar{
+  display:flex;
+  justify-content:flex-start;
+  align-items:center;
+  position: relative;
+  z-index: 2;
+  margin-bottom: 12px;
+}
+
+#back{
+  position: relative;
+  z-index: 1;
+  
+  margin-top: 0px;
+  margin-bottom: 5px;
+  appearance: none;
+  -webkit-appearance: none;
+  border: 0;
+  background: transparent;
+  font: inherit;
+  color: inherit;
+  text-decoration: none;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  padding: 10px 14px;
+  border-radius: 999px;
+
+  /* 控えめで上品なゴースト */
+  color: rgba(18,34,51,.75);
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(18,34,51,.12);
+  box-shadow: 0 8px 20px rgba(0,0,0,.08);
+
+  cursor: pointer;
+  transition: transform .12s ease, box-shadow .12s ease, filter .12s ease;
+}
+
+#back::before{
+  content: "←";
+  display: inline-grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  background: rgba(22,163,148,.14);
+  color: rgba(14,127,116,1);
+  font-weight: 900;
+}
+
+#back:hover{
+  transform: translateY(-1px);
+  filter: brightness(1.02);
+  box-shadow: 0 12px 26px rgba(0,0,0,.10);
+}
+
+#back:active{
+  transform: translateY(1px);
+  box-shadow: 0 8px 18px rgba(0,0,0,.08);
+}
+
+#back:focus-visible{
+  outline: 3px solid rgba(22,163,148,.35);
+  outline-offset: 3px;
+}
+
+.viewer{
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  padding: 18px 16px;
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,.10);
+  background:
+    radial-gradient(280px 160px at 50% 18%, rgba(255,255,255,.10), rgba(255,255,255,.06) 60%, rgba(255,255,255,.02)),
+    linear-gradient(135deg, rgba(255,247,232,.18), rgba(234,247,243,.10));
+  box-shadow: 0 14px 30px rgba(0,0,0,.10);
+
+  display: grid;
+  place-items: center;
+}
+
+
+#zoom-img{
+  display: block;
+  width: min(100%, 560px);   /* ←ここで“でかすぎ”防止 */
+  max-height: 72svh;         /* 画面からはみ出し防止 */
+  height: auto;
+  object-fit: contain;
+  margin: 0 auto;
+
+  margin-bottom: 0;
+  transform: translateY(-14px);
+  filter: drop-shadow(0 18px 22px rgba(0,0,0,.18));
+}
+
+
+
+
+@media (max-width: 780px) {
+  #back{
+    width: auto;
+    padding: 8px 12px;
+    font-size: 14px;
+    margin-bottom: 20%;
+  }
+
+  .viewer{
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    padding: 14px 12px;
+    border-radius: 18px;
+    border: 1px solid rgba(255,255,255,.10);
+    background:
+      radial-gradient(280px 160px at 50% 18%, rgba(255,255,255,.10), rgba(255,255,255,.06) 60%, rgba(255,255,255,.02)),
+      linear-gradient(135deg, rgba(255,247,232,.18), rgba(234,247,243,.10));
+    box-shadow: 0 14px 30px rgba(0,0,0,.10);
+    display:grid;
+    place-items:center;
+  }
+
+  #zoom-img{
+    display:block;
+    width: min(100%, 640px);
+    height: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 18px 22px rgba(0,0,0,.18));
+    width: min(110%, 480px); max-height: 70svh;
+    transform: translateY(-10px); 
+
+    margin-top: 0%;
+    margin-bottom: 10%;
+  }
+
+  .meta{
+    margin-top: 12px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .caption{
+    font-weight: 800;
+    letter-spacing: .02em;
+  }
+
+  .screen{
+    padding: 10px;
+  }
+
+  .card{
+    width: 100%; border-radius: 20px;
+      padding: 58px 18px 70px;
+  }
+
+}

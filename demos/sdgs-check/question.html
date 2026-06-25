@@ -1,0 +1,444 @@
+<!doctype html>
+<html>
+<head>
+    <title>キミはエコい_SDGs診断</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link rel="icon" href="picture/Logo.png" sizes="32x32" type="image/png" />
+    <link rel="stylesheet" href="Qestion.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+</head>
+<body>
+    <div class="screen">
+    <div class="bg"></div>
+
+    <div class="card">
+    <h1></h1>
+    </div>
+    <progress max="100" value="0"></progress>
+    <button id="back" type="button">戻る</button>
+
+    <ul></ul>
+    <div class ="point">あなたのエコ度は... <span data-point-num></span>です</div>
+
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script>
+$(function(){
+  
+
+  // A. Human        -> SDGs 1〜6
+  // B. Economy      -> SDGs 7〜12
+  // C. Environment  -> SDGs 13〜15
+  // D. Peace        -> SDGs 16〜17
+
+  // 現在の問題番号
+  let count = 0;
+
+  // --- セッション保存（リロード対策） ---
+  const SESSION_KEY = 'sdgs_quiz_state_v2';
+
+  function saveState(){
+    try{
+      const state = {
+        v: 2,
+        count,
+        list,
+        goalMap,
+        orders,
+        answers,
+        pickedGoal,
+        categoryScore,
+        goalScore
+      };
+      sessionStorage.setItem(SESSION_KEY, JSON.stringify(state));
+    }catch(e){
+      // 保存できない場合は黙って続行（容量不足など）
+    }
+  }
+
+  function loadState(){
+    try{
+      const raw = sessionStorage.getItem(SESSION_KEY);
+      if(!raw) return false;
+      const state = JSON.parse(raw);
+      if(!state || state.v !== 2) return false;
+
+      count = Number(state.count) || 0;
+      list = state.list || list;
+      goalMap = state.goalMap || goalMap;
+      orders = state.orders || [];
+      answers = state.answers || [];
+      pickedGoal = state.pickedGoal || [];
+
+      if(Array.isArray(state.categoryScore)){
+        categoryScore = state.categoryScore.slice(0,4);
+        while(categoryScore.length < 4) categoryScore.push(0);
+      }
+      if(Array.isArray(state.goalScore)){
+        goalScore = state.goalScore.slice(0,18);
+        while(goalScore.length < 18) goalScore.push(0);
+      }
+
+      if(count < 0) count = 0;
+      if(count >= list.length) count = list.length - 1;
+
+      return true;
+    }catch(e){
+      return false;
+    }
+  }
+
+  // 0..3（A..D）の各カテゴリ得点（=選んだ回数）
+  let categoryScore = [0,0,0,0];
+
+  
+  // 1..17 のSDGs得点
+  let goalScore = Array(18).fill(0);
+
+  // 戻る用
+  let orders = [];  // ★各問題の選択肢表示順（戻る用）
+  let answers = [];       // その問題で選んだ originIndex(0..3)
+  let pickedGoal = [];    // その問題で加点した goalId(1..17)
+
+  // SDGs番号と名称対応
+  const goalNames = {
+    1:"1 貧困をなくそう",
+    2:"2 飢餓をゼロに",
+    3:"3 すべての人に健康と福祉を",
+    4:"4 質の高い教育をみんなに",
+    5:"5 ジェンダー平等を実現しよう",
+    6:"6 安全な水とトイレを世界中に",
+    7:"7 エネルギーをみんなに そしてクリーンに",
+    8:"8 働きがいも経済成長も",
+    9:"9 産業と技術革新の基盤をつくろう",
+    10:"10 人や国の不平等をなくそう",
+    11:"11 住み続けられるまちづくりを",
+    12:"12 つくる責任 つかう責任",
+    13:"13 気候変動に具体的な対策を",
+    14:"14 海の豊かさを守ろう",
+    15:"15 陸の豊かさも守ろう",
+    16:"16 平和と公正をすべての人に",
+    17:"17 パートナーシップで目標を達成しよう"
+  };
+
+  
+  // 各質問の選択肢が加点するSDGs目標ID
+  // [A, B, C, D] の順で格納
+  // 例: Q1のAを選んだらSDGs1に加点、Bなら8に加点、Cなら13に加点、Dなら16に加点
+  // ※質問順シャッフルに伴い、この配列も同じ順でシャッフルされる
+
+  // 1の数は3, 2の数は2, 3の数は4, 5の数は1, 6の数は1, 7の数は1, 8の数は3
+  // 9の数は3, 10の数は2, 11の数は1, 12の数は2, 13の数は3, 14の数は3, 15の数は6, 16の数は7, 17の数は5
+
+  let goalMap = [
+  // [A, B, C, D] それぞれが加点する SDGs 目標ID
+  // A: 1〜6  / B: 7〜12 / C: 13〜15 / D: 16〜17
+  [ 1,  8, 13, 16], // Q1: 変なニュース（貧困/働きがい/気候/公正）
+  [ 2, 12, 15, 17], // Q2: コンビニ（飢餓/つくる責任/陸/パートナー）
+  [ 3,  9, 15, 16], // Q3: 友達のピンチ（健康/技術基盤/陸/公正）
+  [ 6,  7, 14, 17], // Q4: 便利屋（水/エネルギー/水の生態系/協力）
+  [ 3, 11, 13, 17], // Q5: RPGスキル（健康/まちづくり/気候/協力）
+  [ 4,  8, 15, 16], // Q6: 理想の学校（教育/働きがい/陸/公正）
+  [ 2,  8, 14, 17], // Q7: ストレス解消（飢餓/働きがい/水の生態系/協力）
+  [ 5, 10, 13, 16], // Q8: 未来の市長（ジェンダー/不平等/気候/公正）
+  [ 1,  9, 15, 16], // Q9: 変わるボタン（貧困/技術基盤/陸/公正）
+  [ 4, 11, 14, 17], // Q10: 友達グループ（教育/まちづくり/水の生態系/協力）
+  [ 5,  8, 13, 16], // Q11: 嫌いな言葉（ジェンダー/働きがい/気候/公正）
+  [ 4,  9, 14, 17]  // Q12: 嬉しい言葉（教育/技術基盤/水の生態系/協力）
+];
+
+
+
+  // 質問リスト
+  let list = [
+    {
+      'title':'【速報】朝起きたら、スマホに変なニュースが！',
+      'anser':[
+        '財布が冬眠した人が続出！',
+        'やる気でない、専門家「努力が迷子になっている可能性」',
+        '4季が1季に！夏終わらず',
+        '喋るたびに1瞬で"しーん"になる現象、解明か'
+      ]
+    },
+    {
+      'title':'コンビニで1個だけ奢ってあげると言われた',
+      'anser':[
+        '大盛カップ麺',
+        'ミックスナッツ',
+        'コンビニチキン',
+        'たくさん入ったプチシュー'
+      ]
+    },
+    {
+      'title':'友達が「人生終わった」って言ってきた。あなたの第一声は？',
+      'anser':[
+        '「ご飯いこうぜ」',
+        '「状況整理しよ。どうしたの？」',
+        '「外へ散歩しに行こうぜ」',
+        '「誰かと揉めてるの？手伝えることある？」'
+      ]
+    },
+    {
+      'title':'あなたは村の便利屋さん。依頼が4つ来たよ、どれを優先する？',
+      'anser':[
+        '「水まわりが地味に終わってる」',
+        '「エアコンが古くて電気代が高い」',
+        '「川魚がなんか…元気ない」',
+        '「ウノのルールで毎回ケンカになる！」'
+      ]
+    },
+    {
+      'title':'RPGでパッシブスキル（常に発動）を1つ選べる）',
+      'anser':[
+        'HPゲージが減ってる人を察知できる',
+        'お使いクエストを回避する嗅覚がある',
+        '暑さ・寒さ・異常気象の前兆に気づける',
+        '魔王と王様を仲良くさせる'
+      ]
+    },
+    {
+      'title':'理想の学校の校長に！どんな学校？',
+      'anser':[
+        '勉強など、絶対に置いて行かれない',
+        '体験授業が多い',
+        '校庭が小さな森みたいになってる',
+        'いじめ・不公平の相談が秒速で届く窓口'
+      ]
+    },
+    {
+      'title':'あなたのストレスの減らし方は？',
+      'anser':[
+        'まず寝る、そして食う',
+        'やる事を終わらせる',
+        '外を散歩する',
+        '人と遊ぶ'
+      ]
+    },
+    {
+      'title':'未来の市長として最初の一手を打つなら？',
+      'anser':[
+        '子育て・介護・病気の支援を増やす',
+        'お金を稼ぎやすくする',
+        '災害に強い街作りをする',
+        '困りごと解決科を作る'
+      ]
+    },
+    {
+      'title':'目の前に世界が少し変わるボタンが！',
+      'anser':[
+        '貧困がなくなる！',
+        '技術が進化する！',
+        '自然が続く！',
+        '平和が続く！'
+      ]
+    },
+    {
+      'title':'友達グループの中のあなたは？',
+      'anser':[
+        '「そういえばさぁ」話題役！',
+        '「次あそこ行こうぜ」まとめ役！',
+        '「みんな掃除して！忘れ物は？」お母さん役！',
+        '「助かったわ」雰囲気よくする役！'
+      ]
+    },
+    {
+      'title':'あなたが嫌だと思う言葉は？',
+      'anser':[
+        '「自己責任でしょ」',
+        '「結果残してないなら意味ないね」',
+        '「まあ、ちょっとぐらいいいんじゃない？」',
+        '「黙って従って」'
+      ]
+    },
+    {
+      'title':'言われて嬉しい言葉は？',
+      'anser':[
+        '「気づいてくれて助かった！」',
+        '「アイディアめっちゃいいね！」',
+        '「手伝ってくれてありがとう！」',
+        '「気が利くね！」'
+      ]
+    }
+  ];
+
+
+  const restored = loadState();
+
+  // 質問リストと goalMap を同じ順でシャッフル
+  if(!restored){
+  for (let i = list.length - 1; i > 0; i--) {             // ロジックはFisher–Yates
+    const j = Math.floor(Math.random() * (i + 1));
+    [list[i], list[j]] = [list[j], list[i]]; 
+    
+    [goalMap[i], goalMap[j]] = [goalMap[j], goalMap[i]];  // 問題順をシャッフルしたので goalMap も同じ順で入れ替える
+  }
+
+  }
+
+  // 初期状態を保存
+  if(!restored){
+    saveState();
+  }
+
+  // 前回の結果表示
+//if (localStorage.getItem('sindan') == null){
+//  $('#kekka').text('まだ無いよ！');
+//}else{
+//  $('#kekka').text(localStorage.getItem('sindan'));
+//}
+
+  // 配列シャッフル関数
+  function shuffleArray(arr){
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+  }
+
+  // 問題表示
+  function render(count){
+  $('li').remove();
+  $('h1').html(list[count]['title']);
+
+  // 選択肢の表示順をランダム化（戻る用に保存も）
+  // すでに保存されていればそれを使う
+  if(!orders[count]){
+    orders[count] = shuffleArray([0,1,2,3]); // originIndexの並び
+  }
+  const order = orders[count];
+
+  order.forEach(function(originIndex){
+    const text = list[count]['anser'][originIndex];
+    const li = `<li data-origin="${originIndex}">${text}</li>`;
+    $('ul').append(li);
+  });
+
+  $('#back').prop('disabled', count === 0);
+
+  // 表示順が決まったら保存
+  saveState();
+}
+
+  // 初回表示（復元されていればその位置から）
+  render(count);
+  $('progress').val(100 * (count / list.length));
+
+// ーーー回答アルゴリズムーーー
+  // 変数一覧
+  // categoryScore: 各カテゴリ得点（0..3）
+  // goalScore: 各SDGs得点（1..17）
+  // pickedGoal: 各問題で加点したSDGs目標ID（1..17）
+  // answers: 各問題で選んだ選択肢の originIndex(0..3)
+  // orders: 各問題の選択肢表示順（戻る用）
+  // count: 現在の問題番号
+  // list: 質問リスト
+  // goalMap: 各質問の選択肢が加点するSDGs目標ID
+  // goalNames: SDGs番号と名称対応
+
+  // 回答反映
+  // applyAnswer : 機能 - 指定の質問と選択肢に基づき、得点を加減算・pickedGoal更新
+  function applyAnswer(qIndex, originIndex, delta){
+    categoryScore[originIndex] += delta;
+
+    const g = goalMap[qIndex][originIndex]; // 1..17
+    goalScore[g] += delta;
+
+    if(delta > 0){
+      pickedGoal[qIndex] = g;
+    }else{
+      pickedGoal[qIndex] = undefined;
+    }
+  }
+  // 結果決定（偏りを減らす：出現回数で補正して「その人らしさ」を判定）
+  function decideResultGoalId(){
+    // goalMap 内で各目標が「何回登場するか」（= その目標を取りやすい度）を数える
+    const availCount = Array(18).fill(0); // 1..17
+    let totalSlots = 0;
+    for(let q=0; q<goalMap.length; q++){
+      for(let k=0; k<4; k++){
+        const gid = goalMap[q][k];
+        if(gid >= 1 && gid <= 17) availCount[gid]++;
+        totalSlots++;
+      }
+    }
+
+    const n = list.length; // 回答数（=質問数）
+    let bestZ = -Infinity;
+    let bestGoals = [];
+
+    for(let gid=1; gid<=17; gid++){
+      const a = availCount[gid];
+      if(a <= 0) continue; // その目標が一度も出ないなら除外
+
+      // その目標が「ランダムに押された場合」に取られる確率
+      const p = a / totalSlots;
+      const mu = n * p;
+      const varr = n * p * (1 - p);
+
+      // 分散0はあり得ないが念のため
+      const z = (varr > 0) ? ((goalScore[gid] - mu) / Math.sqrt(varr)) : -Infinity;
+
+      if(z > bestZ){
+        bestZ = z;
+        bestGoals = [gid];
+      }else if(z === bestZ){
+        bestGoals.push(gid);
+      }
+    }
+
+    // 同点ならランダム（固定優遇をしない）
+    return bestGoals[Math.floor(Math.random() * bestGoals.length)];
+  }
+
+
+  // liクリック
+  $('body').on('click', 'li', function(){
+    const originIndex = Number($(this).data('origin')); // 0..3
+
+    answers[count] = originIndex;
+    applyAnswer(count, originIndex, +1);
+    saveState();
+
+    if(count < list.length - 1){
+      count++;
+      render(count);
+      $('progress').val(100 * (count / list.length));
+    }else{
+      const goalId = decideResultGoalId();
+      const resultText = goalNames[goalId];
+
+      // 結果（必須）
+      localStorage.setItem('sindan', resultText);
+      localStorage.setItem('sindan_goalId', String(goalId));
+
+      // 結果ページへ
+      sessionStorage.removeItem(SESSION_KEY);
+      window.location.href = 'result.html';
+    }
+
+  });
+
+  // 戻るボタンクリック
+  $('#back').on('click', function(){
+    if(count === 0) return;
+
+    const prevQ = count - 1;
+    const prevIndex = answers[prevQ];
+
+    if(prevIndex !== undefined){
+      applyAnswer(prevQ, prevIndex, -1);
+      answers[prevQ] = undefined;
+      pickedGoal[prevQ] = undefined;
+      saveState();
+    }
+
+    count--;
+    render(count);
+    $('progress').val(100 * (count / list.length));
+  });
+
+});
+</script>

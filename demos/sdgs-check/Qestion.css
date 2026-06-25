@@ -1,0 +1,311 @@
+*{ box-sizing:border-box; }
+body{
+  position: relative;      /* 疑似要素の基準 */
+  text-align: center;
+  margin:0;
+  font-family: "Noto Sans JP", system-ui, -apple-system, sans-serif;
+  color:var(--text);
+  
+}
+
+body::before {
+  	content: "";             /* 疑似要素を有効化 */
+  	position: absolute;      /* body基準で配置 */
+
+    top: 0; 
+  	left: 0;
+  	width: 100%;
+  	height: 100%;
+
+  	background-image: url("picture/haikei.png"); /* 背景画像 */
+  	background-size: 250%;
+
+	opacity: 0.3;   /* 透明度 */
+  	z-index: -1;             /* 中身の背面へ */
+}
+
+:root{
+  --bg1:#EAF7F3;        /* 薄いティール寄り */
+  --bg2:#FFF7E8;        /* 薄いアイボリー */
+  --primary:#16A394;    /* ティール */
+  --accent:#F7C948;     /* 星っぽい黄色 */
+  --text:#123;
+}
+
+.screen{
+  min-height:100svh;
+/* 高さ中央ぞろえ
+  display:grid;
+  place-items:center;
+*/
+  padding:24px;
+  background: radial-gradient(1200px 800px at 30% 20%, var(--bg2), transparent 60%),
+              radial-gradient(1200px 800px at 70% 80%, var(--bg1), transparent 60%),
+              linear-gradient(135deg, #ffffff, #f7fbff);
+  position:relative;
+  overflow:hidden;
+}
+
+/* 背景パターン：薄く・少しだけぼかす */
+.bg{
+  pointer-events: none;
+  position:absolute; inset:-40px;
+  background:url("picture/haikei.png") center/520px repeat;
+  opacity:.12;
+  filter: blur(1.5px);
+  transform: rotate(-6deg) scale(1.1);
+}
+
+.card{
+  position: relative;
+  width: min(760px, 92vw);
+  margin: 0 auto;
+  margin-bottom: 3px;
+  padding: 28px 22px;
+  border-radius: 24px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+
+  /* ブラウンの深み */
+  background:
+    radial-gradient(120% 140% at 20% 10%, rgba(255,255,255,.18), transparent 55%),
+    linear-gradient(135deg, #6a3d2a, #4b2a1f);
+
+  /* ちょい立体 */
+  border: 1px solid rgba(255,255,255,.14);
+  box-shadow:
+    0 18px 50px rgba(0,0,0,.22),
+    0 2px 0 rgba(255,255,255,.08) inset;
+
+  color: rgba(255,255,255,.92); /* カード内の文字色 */
+}
+
+/* つやハイライト */
+.card::before{
+  content:"";
+  position:absolute;
+  inset:-80px -140px auto auto;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.28), transparent 60%);
+  transform: rotate(18deg);
+  pointer-events:none;
+  z-index: 0;
+}
+
+/* ほんのりノイズっぽい質感（好み） */
+.card::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background: linear-gradient(0deg, rgba(0,0,0,.10), transparent 55%);
+  opacity:.6;
+  pointer-events:none;
+  z-index: 0;
+}
+
+
+
+h1{
+  color: rgba(255,255,255,.95);
+  font-weight: bold;
+  margin-bottom: 20px;
+
+  line-height: 1.25;   /* 行間を固定 */
+  min-height: 2.5em;   /* 2行ぶん確保（1.25 × 2 = 2.5） */
+
+  display: flex;
+  align-items: center;        /* 縦センター */
+  justify-content: center;    /* 横センター（text-alignでもOK） */
+  text-align: center;
+}
+
+ul{
+  width: min(600px, 100%); /* 固定→可変 */
+  margin: 0 auto;
+  padding-left: 0;
+  list-style: none;
+}
+
+progress{
+  width: min(520px, 100%); /* 固定→可変 */
+  height: 18px;
+  margin-top: 10px;
+  margin-bottom: 5px;
+/*  -webkit-appearance: none; /* プログレスバーのスタイルをリセット */
+/*  -moz-appearance: none; /* プログレスバーのスタイルをリセット */
+/*  background-color: #494949; /* プログレスバーの背景色/-moz- 用 */
+}
+
+#back{
+  position: relative;
+  z-index: 1;
+  
+  margin-top: 0px;
+  margin-bottom: 5px;
+  appearance: none;
+  -webkit-appearance: none;
+  border: 0;
+  background: transparent;
+  font: inherit;
+  color: inherit;
+  text-decoration: none;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  padding: 10px 14px;
+  border-radius: 999px;
+
+  /* 控えめで上品なゴースト */
+  color: rgba(18,34,51,.75);
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(18,34,51,.12);
+  box-shadow: 0 8px 20px rgba(0,0,0,.08);
+
+  cursor: pointer;
+  transition: transform .12s ease, box-shadow .12s ease, filter .12s ease;
+}
+
+#back::before{
+  content: "←";
+  display: inline-grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  background: rgba(22,163,148,.14);
+  color: rgba(14,127,116,1);
+  font-weight: 900;
+}
+
+#back:hover{
+  transform: translateY(-1px);
+  filter: brightness(1.02);
+  box-shadow: 0 12px 26px rgba(0,0,0,.10);
+}
+
+#back:active{
+  transform: translateY(1px);
+  box-shadow: 0 8px 18px rgba(0,0,0,.08);
+}
+
+#back:focus-visible{
+  outline: 3px solid rgba(22,163,148,.35);
+  outline-offset: 3px;
+}
+
+
+li{
+  position: relative;
+  z-index: 1;
+  margin-top: 12px;
+
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(18,34,51,0.1);
+  border-radius: 16px;
+  box-shadow: 0 10px 24px rgba(0,0,0,0.06);
+
+  font-weight: 550;
+  font-size: 20px;
+
+  /* 2行ぶんの高さ確保 */
+  line-height: 1.25;
+  min-height: 4.5em;         /* line-height(1.25) × 2行 = 2.5em */
+
+  /* 文字を箱の中央に */
+  display: flex;
+  align-items: center;       /* 縦センター */
+  justify-content: center;   /* 横センター */
+  text-align: center;
+
+  /* パディングは“縦”より“横”中心に寄せると安定 */
+  padding: 0 12px;           /* ←縦paddingを消すのがコツ */
+}
+
+.point{
+  margin-top: 100px;
+  color: rgb(239, 81, 108);
+  display: none;
+  font-size: 40px;
+}
+
+
+
+
+/*  ::-webkit-progress-bar {
+/*    background-color: #ffffff93; /* プログレスバーの背景色/-webkit- 用 */
+/*  }
+*/
+/*  ::-webkit-progress-value {
+/*  background-color: greenyellow; /* プログレスバーの進捗部分色/-webkit- 用 */
+/*  }
+*/
+/*  ::-moz-progress-bar {
+/*  background-color: greenyellow; /* プログレスバーの進捗部分色/-moz- 用 */
+/*  }
+*/
+
+.result{
+  position: fixed;
+  top: 10%;
+  right: 10%;
+  font-weight: bold;
+}
+#kekka{
+  color: red;
+}
+
+
+/*　－－－－－－－－－－－－－－－－－－－－　*/
+/*　ーーーーメディアクエリ（スマホ）ーーーー　*/ 
+/*　－－－－－－－－－－－－－－－－－－－－　*/
+
+@media (max-width: 780px) {
+
+.card{
+  width:min(100%, 760px);
+  /*padding:28px 22px 22px;
+  border-radius:24px;
+  */
+}
+h1{
+  font-size: 18px;
+  line-height: 1.25;
+  min-height: 2.5em;
+}
+
+ul{
+  width: 100%;
+  margin: 0;
+  padding-left: 0;
+}
+
+li{
+  font-size: 15px;
+
+  line-height: 1.25;
+  min-height: 4.5em;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  padding: 0 10px;
+}
+
+progress{
+  width: 72%;
+}
+
+#back{
+  width: auto;
+  padding: 8px 12px;
+  font-size: 14px;
+
+}
+}
+/* メディアクエリ終了*/
